@@ -1,0 +1,33 @@
+
+
+<!-- BEGIN Load JavaScript Block -->
+    {{widget type="Magento\Cms\Block\Widget\Block" template="widget/static_block/default.phtml" block_id="475"}}
+<!-- END Load JavaScript Block -->
+
+<!-- BEGIN Load CSS Block -->
+    {{widget type="Magento\Cms\Block\Widget\Block" template="widget/static_block/default.phtml" block_id="476"}}
+<!-- END Load CSS Block -->
+
+
+<!-- Begin HTML -->
+    <div class="jb-modulePage">
+        <div id="moduleContent">Loading...</div>
+    </div>
+<!-- END Marketing Variables -->
+
+
+<!-- BEGIN Bottom Script -->
+<script>
+    var urlSlug = window.location.href.split('/').pop();
+    var contentUrl = `https://api.storyblok.com/v2/cdn/stories/marketing-pages/${urlSlug}?token=Rm6NUxAB9ucRFNPYGrZFNQtt`;
+
+    var fullContentData = fetch(contentUrl)
+        .then(response => response.json())
+        .then(function(data) {
+        var relevantData = data.story.content.body;
+        var stringOfHtmlModules = createStringOfHtmlModules(relevantData);
+        document.getElementById("moduleContent").innerHTML = stringOfHtmlModules;
+        } );
+
+</script>
+<!-- END Bottom Script -->

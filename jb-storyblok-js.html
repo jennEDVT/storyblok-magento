@@ -1,0 +1,118 @@
+<script> 
+  
+  function createStringOfHtmlModules(arrayOfRelevantData) {
+    console.log("arrayOfRelevantData", arrayOfRelevantData)
+    var stringOfHtmlModules = "";
+    
+    arrayOfRelevantData.forEach(function(item, index){
+      
+      switch(item.component) {
+        case "h1":
+          stringOfHtmlModules += `<div class="module module--h1Module">
+                                    <h1 style="text-align: ${item.alignment}" class="h1Module">${item["heading_text"]}</h1>
+                                  </div>`;
+          break;
+        case "h2":
+          stringOfHtmlModules += `<div class="module module--h2Module">
+                                    <h2 style="text-align: ${item.alignment}" class="h2Module">${item["headingText"]}</h2>
+                                  </div>`;
+          break;
+        case "p1":
+          stringOfHtmlModules += `<div class="module module--p1Module">
+                                    <p style="text-align: ${item.alignment}" class="p1Module">${item["paragraph_text"]}</p>
+                                  </div>`;
+          break;
+        case "p2":
+          stringOfHtmlModules += `<div class="module module--p2Module">
+                                    <p style="text-align: ${item.alignment}" class="p2Module">${item["paragraphText"]}</p>
+                                  </div>`;
+          break;
+        case "image":
+          stringOfHtmlModules +=  `<div class="module module--imageModule">
+                                    <img class="module module--imageModule" src=${item.image[0].filename} />
+                                  </div>`;
+          break;
+        case "full_width_video":
+          stringOfHtmlModules +=  `<div class="module module--fullWidthVideoModule">
+                                    <iframe width="1120" height="630" src=${item['iframe_source']} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+                                  </div>`;
+          break;
+        case "image_beside_text":
+          let imageBesideTextHeading = item.heading ? `<h2 class="imageBesideTextModule__heading">${item.heading}</h2>` : '';
+          let imageBesideTextSubheading = item.subheading ? `<h3 class="imageBesideTextModule__subheading">${item.subheading}</h3>` : '';
+          let imageBesideTextParagraph = item.text ? `<div class="imageBesideTextModule__paragraph">${item.text}</div>` : '';
+          let imageBesideTextButton = item["button_text"] ? `<a class="imageBesideTextModule__button" href=${item["button_url"]}>${item["button_text"]}</a>` : "";
+          stringOfHtmlModules +=  `<div class="module module--imageBesideTextModule">
+                                    <div class="imageBesideTextModule__image">
+                                      <img src=${item.image[0].filename} alt=${item["alt_text"]} />
+                                    </div>
+                                    <div class="imageBesideTextModule__text">
+                                      ${imageBesideTextHeading}
+                                      ${imageBesideTextSubheading}
+                                      ${imageBesideTextParagraph}
+                                      ${imageBesideTextButton}
+                                    </div>
+                                  </div>`;
+          break;
+        case "card":
+          let heading = item.Heading ? `<h2 class="cardModule__heading">${item.Heading}</h2>` : '';
+          let subHeading = item.Subheading ? `<h3 class="cardModule__subheading">${item.Subheading}</h3>` : '';
+          let paragraph = item.paragraph ? `<div class="cardModule__paragraph">${item.paragraph}</div>` : '';
+          let button = item.buttonText ? `<a class="cardModule__button" href=${item.buttonUrl}>${item.buttonText}</a>` : "";
+          stringOfHtmlModules +=  `<div class="module module--cardModule">
+                                    <div class="cardModule__image">
+                                      <img src=${item.image[0].filename} alt=${item.altText} />
+                                    </div>
+                                    ${heading}
+                                    ${subHeading}
+                                    ${paragraph}
+                                    ${button}
+                                  </div>`;
+          break;
+        case "Hero":
+          let textColor = item["writing_color"] == "light" ? "lightText" : "darkText";
+          stringOfHtmlModules +=  `<div style="background-image: url(${item["hero_image"][0]["filename"]})" class="module module--heroModule ${textColor}">
+                                    <div class="heroModuleContentWrap">
+                                      <h1 class="heroModule__heading">${item["hero_heading"]}</h1>
+                                      <p class="heroModule__subBeading">${item["hero_subHeading"]}</p>
+                                      <div class="buttonWrap">
+                                        <a class="button heroModule__button" href=${item["hero_button_url"]}>${item["hero_button_text"]}</a>
+                                      </div>
+                                    </div>
+                                  </div>`;
+          break;
+        case "category-banner":
+          let catBannertextColor = item["writing_color"] == "dark" ? "darkText" : "lightText";
+          let hideCategoruyBannerSubHeadingClass = !item["bannerSubHeading"] ? 'jb-displayNone' : "";
+          let hideCategoryButtonClass = !item["buttonUrl"] ? 'jb-displayNone' : "";
+
+          stringOfHtmlModules +=  `<div style="background-image: url(${item["bannerImage"][0]["filename"]})" class="module module--categoryBannerModule ${catBannertextColor}">
+                                    <div class="categoryBannerModuleContentWrap">
+                                      <h1 class="categoryBannerModule__heading">${item["bannerText"]}</h1>
+                                      <p class="categoryBannerModule__subbHeading ${hideCategoruyBannerSubHeadingClass}">${item["bannerSubHeading"]}</p>
+                                      <div class="buttonWrap ${hideCategoryButtonClass}">
+                                        <a class="button categoryBannerModule__button" href=${item["buttonUrl"]}>${item["buttonText"]} > </a>
+                                      </div>
+                                    </div>
+                                  </div>`;
+        break;
+        case "columns":
+          let numberOfColumns = item.block.length;
+          stringOfHtmlModules += `<div class="module module--columnsModule columns${numberOfColumns}">`;
+          stringOfHtmlModules +=    createStringOfHtmlModules(item.block);
+          stringOfHtmlModules += `</div>`;
+          break;
+        case "column-content":
+          stringOfHtmlModules += `<div class="module module--columnContentModule">`;
+          stringOfHtmlModules +=    createStringOfHtmlModules(item.block);
+          stringOfHtmlModules += `</div>`;
+          break;
+        default:
+          stringOfHtmlModules += `<div class="module module--error">ERROR: ${item["component"]} does not exist</div>`;
+      }
+    })
+    
+    return stringOfHtmlModules;
+  }
+
+</script>
