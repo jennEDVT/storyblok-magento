@@ -33,40 +33,62 @@
       max-width: 1280px;
       padding: 0 20px;
     }
+
+    /* h1 module  */
     
     .module--h1Module {
-      /* font-family: "Cormorant Garamond",Arial,serif; */
-      /* max-width: var(--narrowWidth); */
       padding: 0 var(--contentPadding);
     }
 
     .module--h1Module h1 {
         font-size: 8rem;
     }
+
+    
+    /* h2 module  */
     
     .module--h2Module {
-      /* max-width: var(--narrowWidth); */
       padding: 0 var(--contentPadding);
     }
     
     .module--h2Module h2 {
       font-size: 30px;
     }
+
+
+    /* paragraph module  */
     
     .module--p1Module {
-      /* max-width: var(--narrowWidth); */
       padding: 0 var(--contentPadding);
       font-size: 1.8rem;
       margin-top: var(--paragraphMarginComp);
     }
+
+
+    /* iFrame module  */
     
     .module--fullWidthVideoModule iframe {
       width: 100%;
     }
+
+
+    /* columns and column content modules  */
     
     .module--columnsModule {
       display: flex;
       justify-content: space-between;
+    }
+
+    .columns2 .module--columnContentModule {
+      width: 48%;
+    }
+
+    .columns3 .module--columnContentModule {
+      width: 32%;
+    }
+
+    .columns4 .module--columnContentModule {
+      width: 24%;
     }
 
     .module--columnContentModule {
@@ -146,6 +168,41 @@
     }
 
 
+
+    /* video banner module  */
+
+    .module--videoBanner {
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      width: 100%;
+      height: 32vw;
+      padding: 0;
+      position: relative;
+      margin-bottom: var(--moduleMargin);
+    }
+
+    .videoBannerTextImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 32vw;
+      z-index: 99;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .mobileVideoIframe {
+        display: none;
+    }
+
+
     /* Utilities */
 
       .lightText * {
@@ -190,6 +247,33 @@
           justify-content: center !important;
         }
 
+        .module--columnsModule {
+          flex-wrap: wrap;
+        }
+
+        .module--columnsModule .module--columnContentModule {
+          width: 100% !important;
+        }
+
+    }
+
+
+    @media screen and (max-width: 900px) {
+      .desktopVideoIframe {
+          display: none;
+      }
+  
+      .mobileVideoIframe {
+          display: block;
+      }
+
+      .module--videoBanner {
+        height: 94vw;
+      }
+
+      .videoBannerTextImage {
+        height: 94vw;
+      }
     }
     
     
