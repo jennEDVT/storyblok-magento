@@ -109,6 +109,7 @@
     /* Category Banner */
 
     .module--categoryBannerModule {
+      background-color: white;
       background-position: 0;
       background-repeat: no-repeat;
       background-size: cover;
@@ -127,6 +128,10 @@
       position: relative;
     }
 
+    .module--categoryBannerModule.lightText {
+        background-color: #354458;
+    }
+
     .categoryBannerModuleContentWrap {
       text-align: right;
       margin-right: 5%;
@@ -140,15 +145,15 @@
     }
 
     .categoryBannerModule__subbHeading {
-      font-size: 3rem;
-      margin: var(----categoryBannerTextMargin) 0;
+      font-size: 2.8rem;
+      margin: var(--categoryBannerTextMargin) 0;
     }
 
     .module--categoryBannerModule .buttonWrap {
       display: flex;
       width: 100%;
       justify-content: flex-end;
-      margin: var(----categoryBannerTextMargin) 0;
+      margin: var(--categoryBannerTextMargin) 0;
     }
 
     .categoryBannerModule__button {
@@ -158,7 +163,7 @@
       display: flex;
       align-items: center;
       letter-spacing: 1.2px;
-      font-size: 12px;
+      font-size: 14px;
     }
 
     .categoryBannerModule__button:hover {
@@ -169,9 +174,10 @@
 
 
 
-    /* video banner module  */
+    /* video banner and static banner modules  */
 
-    .module--videoBanner {
+    .module--videoBanner,
+    .module--staticImageBanner {
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -200,6 +206,31 @@
 
     .mobileVideoIframe {
         display: none;
+    }
+
+    .videoBannerTextImage--mobile {
+        display: none;
+    }
+
+    .module--staticImageBanner--mobile {
+        display: none;
+      }
+
+
+    /* cta button  */
+
+    .module--ctaButton a {
+      background: #354458;
+      color: #fff;
+      padding: 12px 35px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 200ms;
+    }
+
+    .module--ctaButton a:hover {
+      background: #485d78;
     }
 
 
@@ -254,11 +285,11 @@
         .module--columnsModule .module--columnContentModule {
           width: 100% !important;
         }
-
     }
 
 
     @media screen and (max-width: 900px) {
+
       .desktopVideoIframe {
           display: none;
       }
@@ -267,13 +298,31 @@
           display: block;
       }
 
-      .module--videoBanner {
+      .module--videoBanner,
+      .module--staticImageBanner {
         height: 94vw;
       }
 
       .videoBannerTextImage {
         height: 94vw;
       }
+
+      .module--staticImageBanner--desktop {
+        display: none;
+      }
+
+      .module--staticImageBanner--mobile {
+        display: flex;
+      }
+
+      .videoBannerTextImage--desktop {
+        display: none;
+      }
+
+      .videoBannerTextImage--mobile {
+        display: block;
+      }
+
     }
     
     

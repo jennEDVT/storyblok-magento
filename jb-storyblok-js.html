@@ -19,14 +19,24 @@
           break;
         case "paragraph":
           stringOfHtmlModules += `<div class="module module--p1Module ${item['css_class']}">
-                                    <p style="text-align: ${item.alignment}" class="p1Module">${item["paragraph_text"]}</p>
+                                    <p style="text-align: ${item.alignment}" ${item.alignment}" class="p1Module">${item["paragraph_text"]}</p>
+                                  </div>`;
+          break;
+        case "cta_button":
+          var ctaTarget = item['open_in_new_window'] ? "_blank" : '';
+          stringOfHtmlModules += `<div class="module module--ctaButton ${item['css_class']}">
+                                    <a target="${ctaTarget}" href="${item['button_url']}">${item['button_text']}</a>
                                   </div>`;
           break;
         case "image":
           var imageModuleAltText = item.image[0].alt ? item.image[0].alt : "Charles and Colvard jewelry";
+          var imageLinkUrl = item['link_url'] ? item['link_url'] : '';
+          var pointerEventsStyle  = item['link_url'] ? 'pointer-events: auto' : 'pointer-events: none';
           stringOfHtmlModules +=  `<div class="module module--imageModule ${item['css_class']}">
-                                    <img alt="${imageModuleAltText}" class="module module--imageModule" src=${item.image[0].filename} />
-                                  </div>`;
+                                      <a style="${pointerEventsStyle}" href="${imageLinkUrl}">
+                                        <img alt="${imageModuleAltText}" class="module module--imageModule" src=${item.image[0].filename} />
+                                      </a>
+                                    </div>`;
           break;
         case "iframe":
           stringOfHtmlModules +=  `<div class="module module--iframe ${item['css_class']}">
@@ -42,13 +52,11 @@
             let videoBannerposter;
             let videoBannerFallbackImageOnScreenResize;
             let viewportWidth = window.innerWidth;
-            let videoBannerTextImage;
 
             if (viewportWidth > 900) {
               videoBannercssClass = "desktopVideoIframe";
               videoBannerVideoSource = item['desktop_vimeo_source'];
               videoBannerposter = item['desktop_banner_first_frame_image'][0].filename;
-              videoBannerTextImage = item['desktop_banner_text_image'][0].filename;
               videoBannerFallbackImageOnScreenResize = item['mobile_banner_first_frame_image'][0].filename;
             }
 
@@ -56,13 +64,16 @@
               videoBannercssClass = "mobileVideoIframe";
               videoBannerVideoSource = item['mobile_vimeo_source'];
               videoBannerposter = item['mobile_banner_first_frame_image'][0].filename;
-              videoBannerTextImage = item['mobile_banner_text_image'][0].filename;
               videoBannerFallbackImageOnScreenResize = item['desktop_banner_first_frame_image'][0].filename;
             }
 
           stringOfHtmlModules +=  `<div style="background-image: url(${videoBannerFallbackImageOnScreenResize})" class="module--videoBanner ${item['css_class']}">
                                       <a href=${item['link_url']}>
-                                        <div style="background-image: url(${videoBannerTextImage})" class="videoBannerTextImage">
+                                        <div style="background-image: url(${item['desktop_banner_text_image'][0].filename})" class="videoBannerTextImage videoBannerTextImage--desktop">
+                                        </div>
+                                      </a>
+                                      <a href=${item['link_url']}>
+                                        <div style="background-image: url(${item['mobile_banner_text_image'][0].filename})" class="videoBannerTextImage videoBannerTextImage--mobile">
                                         </div>
                                       </a>
                                       <video  id="videoElement" 
@@ -71,10 +82,22 @@
                                               class=${videoBannercssClass}
                                               style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;" playsinline loop autoplay muted>
                                       </video>
-                                    
-
                                   </div>`;
-        break;                       
+        break;
+        case "static_image_banner":
+          stringOfHtmlModules +=  `<div style="background-image: url(${item['desktop_banner_background_image'][0].filename})" class="module--staticImageBanner module--staticImageBanner--desktop ${item['css_class']}">
+                                      <a href=${item['link_url']}>
+                                        <div style="background-image: url(${item['desktop_banner_text_image'][0].filename})" class="videoBannerTextImage ">
+                                        </div>
+                                      </a>
+                                  </div>
+                                  <div style="background-image: url(${item['mobile_banner_background_image'][0].filename})" class="module--staticImageBanner module--staticImageBanner--mobile ${item['css_class']}">
+                                      <a href=${item['link_url']}>
+                                        <div style="background-image: url(${item['mobile_banner_text_image'][0].filename})" class="videoBannerTextImage ">
+                                        </div>
+                                      </a>
+                                  </div>`;
+        break;                         
         case "category_banner":
           let catBannertextColor = item["writing_color"] == "dark" ? "darkText" : "lightText";
           let hideCategoruyBannerSubHeadingClass = !item["banner_subHeading"] ? 'jb-displayNone' : "";
