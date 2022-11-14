@@ -15,7 +15,8 @@
       color: var(--almostBlack);
     }
 
-    h1 {
+    h1,
+    h2 {
       font-family: "Cormorant Garamond",Arial,serif;
     }
     
@@ -51,10 +52,23 @@
       padding: 0 var(--contentPadding);
     }
     
-    .module--h2Module h2 {
-      font-size: 30px;
+    .module--h2Module h2,
+    .jb-styledAsH2 h1 {
+      font-size: 5rem;
     }
 
+    /* Image Module  */
+
+    .module.module--imageModule {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .module.module--imageModule img,
+    .module.module--imageModule a {
+      margin: 0 !important;
+    }
 
     /* paragraph module  */
     
@@ -71,12 +85,28 @@
       width: 100%;
     }
 
+    /* Product Card  */
+
+    .module--productCard a {
+      display: block;
+      background: #354458;
+      color: white;
+      font-size: 1.7rem;
+      padding: 10px;
+      text-align: center;
+    }
+    
+    .module--productCard a:hover {
+      background: #485d78;
+    }
+
 
     /* columns and column content modules  */
     
     .module--columnsModule {
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
 
     .columns2 .module--columnContentModule {
@@ -88,7 +118,7 @@
     }
 
     .columns4 .module--columnContentModule {
-      width: 24%;
+      width: 23%;
     }
 
     .module--columnContentModule {
@@ -97,7 +127,7 @@
     }
 
     .module--columnContentModule * {
-        margin: 10px 0;
+        margin: 15px 0 !important;
         padding: unset;
     }
 
@@ -172,6 +202,36 @@
 
     }
 
+    /* Static Image with HTML Text Banner (uses many category banner styles as well) */
+
+    .module--categoryBannerModule--staticBanner {
+      padding: 215px 0;
+      background-position: center center;
+    }
+
+    .module--categoryBannerModule--staticBanner .categoryBannerModuleContentWrap {
+      max-width: 40%;
+      margin-left: 5%;
+      text-align: center;
+    }
+
+    .module--categoryBannerModule--staticBanner .categoryBannerModuleContentWrap * {
+      margin: 10px 0;
+    }
+
+    .module--categoryBannerModule--staticBanner .buttonWrap {
+      justify-content: center;
+    }
+
+    .module--categoryBannerModule--staticBanner .categoryBannerModule__button {
+      border: unset;
+      border: solid 1px;
+    }
+
+    .module--categoryBannerModule--staticBanner--mobile {
+      display: none;
+    }
+
 
 
     /* video banner and static banner modules  */
@@ -216,6 +276,89 @@
         display: none;
       }
 
+    
+    /* FAQ Accordion  */
+
+    .accordian__accordianItem {
+      border-bottom: solid #eee 1px;
+    }
+
+    .accordian__accordianItem--firstInSection {
+      border-top: solid #eee 1px;
+      margin-top: 25px;
+    }
+
+    .accordianItem__button {
+      cursor: pointer;
+      margin: 5px 0;
+      padding: 18px;
+      width: 100%;
+      text-align: left;
+      border: none;
+      outline: none;
+      transition: 0.4s;
+      display: flex;
+      justify-content: space-between;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1.7rem;
+    }
+
+    .accordianItem__icon {
+      font-size: 2rem;
+    }
+
+
+
+    .accordianItem__button:hover {
+      border: unset;
+    }
+
+    .accordianItem__button:focus {
+      border: unset;
+      background: white;
+    }
+
+    .accordianItem__button.active {
+      background: #eee;
+    }
+
+    .accordianItem__button:hover {
+      background-color: #eee;
+    }
+
+    .accordian__accordianItem a {
+      margin-right: 5px;
+      color: #337ab7;
+    }
+
+    .accordian__accordianItem a:hover {
+      text-decoration: underline;
+    }
+
+    .faqPanel {
+      padding: 0 18px;
+      background-color: white;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+
+    .faqPanel p {
+      margin: 15px 0 !important;
+      font-size: 1.6rem;
+    }
+
+    .module--accordion_item {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .module--accordion_section {
+      margin-top: -30px;
+    }
 
     /* cta button  */
 
@@ -245,7 +388,7 @@
       }
 
       .jb-displayNone {
-        display: none;
+        display: none !important;
       }
 
       .jb-overlay {
@@ -258,6 +401,54 @@
         top: 0;
         pointer-events: none;
       }
+
+      .jb-loaderWrapper {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        margin-top: 25%;
+      }
+
+      .jb-loader {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        display: inline-flex;
+        background-color: transparent;
+        border: 5px solid #ECEFF1;
+        border-radius: 50%;
+      }
+      .jb-loader:after {
+        position: absolute;
+        content: "";
+        top: 0px;
+        left: 0px;
+        width: 100px;
+        height: 100px;
+        padding: 3px;
+        border-width: 2px;
+        border-style: solid;
+        border-color: #354458 transparent transparent transparent;
+        border-radius: 50%;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        animation: ringrotate .8s infinite ease-in-out;
+        -webkit-animation: ringrotate .8s infinite ease-in-out;
+      }
+
+      /* Animation */
+      @keyframes ringrotate {
+        0% {
+          transform: rotateZ(0deg);
+          -webkit-transform: rotateZ(0deg);
+        }
+        100% {
+          transform: rotateZ(360deg);
+          -webkit-transform: rotateZ(360deg);
+        }
+      }
+
     
 
 
@@ -321,6 +512,19 @@
 
       .videoBannerTextImage--mobile {
         display: block;
+      }
+
+      .module--categoryBannerModule--staticBanner--mobile {
+        display: flex;
+      }
+
+      .module--categoryBannerModule--staticBanner--desktop {
+        display: none;
+      }
+
+      .module--categoryBannerModule--staticBanner .categoryBannerModuleContentWrap {
+        width: unset;
+        max-width: unset;
       }
 
     }

@@ -11,7 +11,11 @@
 
 <!-- Begin HTML -->
     <div class="jb-modulePage">
-        <div id="moduleContent">Loading...</div>
+        <div id="moduleContent">
+            <div class="jb-loaderWrapper">
+                <div class="jb-loader"></div>
+              </div>              
+        </div>
     </div>
 <!-- END Marketing Variables -->
 
@@ -37,6 +41,7 @@
         var relevantData = data.story.content.body;
         var stringOfHtmlModules = createStringOfHtmlModules(relevantData);
         document.getElementById("moduleContent").innerHTML = stringOfHtmlModules;
+        activateAccordion();
         } );
 
 </script>

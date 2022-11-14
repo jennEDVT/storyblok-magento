@@ -8,13 +8,20 @@
       
       switch(item.component) {
         case "h1":
-          stringOfHtmlModules += `<div class="module module--h1Module ${item['css_class']}">
+          var h2StyleClass = item['apply_h2_styles'] ? "jb-styledAsH2" : '';
+
+          stringOfHtmlModules += `<div class="module module--h1Module ${h2StyleClass} ${item['css_class']}">
                                     <h1 style="text-align: ${item.alignment}" class="h1Module">${item["heading_text"]}</h1>
                                   </div>`;
           break;
         case "h2":
           stringOfHtmlModules += `<div class="module module--h2Module ${item['css_class']}">
                                     <h2 style="text-align: ${item.alignment}" class="h2Module">${item["heading_text"]}</h2>
+                                  </div>`;
+          break;
+        case "h3":
+          stringOfHtmlModules += `<div class="module module--h3Module ${item['css_class']}">
+                                    <h3 style="text-align: ${item.alignment}" class="h2Module">${item["heading_text"]}</h3>
                                   </div>`;
           break;
         case "paragraph":
@@ -26,6 +33,14 @@
           var ctaTarget = item['open_in_new_window'] ? "_blank" : '';
           stringOfHtmlModules += `<div class="module module--ctaButton ${item['css_class']}">
                                     <a target="${ctaTarget}" href="${item['button_url']}">${item['button_text']}</a>
+                                  </div>`;
+          break;
+        case "product_card":
+          var productAltText = item['product_image'][0].alt ? item['product_image'][0].alt : "Charles and Colvard jewelry";
+          stringOfHtmlModules += `<div class="module module--productCard ${item['css_class']}">
+                                    <img alt="${productAltText}" class="" src=${item['product_image'][0].filename} />
+                                    <p>${item['product_title']}</p>
+                                    <a href="${item['button_link']}">${item['button_text']}</a>
                                   </div>`;
           break;
         case "image":
@@ -114,6 +129,31 @@
                                     </div>
                                   </div>`;
         break;
+        case "static_banner_with_html_text":
+          let statBannertextColor = item["writing_color"] == "dark" ? "darkText" : "lightText";
+          let hideStatBannerSubHeadingClass = !item["banner_subHeading"] ? 'jb-displayNone' : "";
+          let hideStatButtonClass = !item['button_url'] ? 'jb-displayNone' : "";
+          let statBannerContentAlignment = item['writing_location'] == "left" ? "flex-start" : "flex-end"; 
+
+          stringOfHtmlModules +=  `<div style="background-image: url(${item['banner_image'][0]["filename"]})" class="module module--categoryBannerModule module--categoryBannerModule--staticBanner module--categoryBannerModule--staticBanner--desktop ${item['css_class']} ${statBannertextColor}">
+                                      <div style="align-self: ${statBannerContentAlignment};" class="categoryBannerModuleContentWrap">
+                                        <h1 class="categoryBannerModule__heading">${item['banner_heading']}</h1>
+                                        <p class="categoryBannerModule__subbHeading ${hideStatBannerSubHeadingClass}">${item['banner_subHeading']}</p>
+                                        <div class="buttonWrap ${hideStatButtonClass}">
+                                          <a class="button categoryBannerModule__button" href=${item['button_url']}>${item['button_text']} </a>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div style="background-image: url(${item['mobile_image'][0]["filename"]})" class="module module--categoryBannerModule module--categoryBannerModule--staticBanner module--categoryBannerModule--staticBanner--mobile ${item['css_class']} ${statBannertextColor}">
+                                      <div style="align-self: ${statBannerContentAlignment};" class="categoryBannerModuleContentWrap">
+                                        <h1 class="categoryBannerModule__heading">${item['banner_heading']}</h1>
+                                        <p class="categoryBannerModule__subbHeading ${hideStatBannerSubHeadingClass}">${item['banner_subHeading']}</p>
+                                        <div class="buttonWrap ${hideStatButtonClass}">
+                                          <a class="button categoryBannerModule__button" href=${item['button_url']}>${item['button_text']} </a>
+                                        </div>
+                                    </div>
+                                  </div>`;
+        break;
         case "grid":
           let numberOfColumns = item.column.length;
           stringOfHtmlModules += `<div class="module module--columnsModule ${item['css_class']} columns${numberOfColumns}">`;
@@ -125,6 +165,26 @@
           stringOfHtmlModules +=    createStringOfHtmlModules(item.block);
           stringOfHtmlModules += `</div>`;
           break;
+        case "accordion_section":
+          stringOfHtmlModules += `<div class="module module--accordion_section ${item['css_class']}">`;
+          stringOfHtmlModules +=    createStringOfHtmlModules(item["accordion_item"]);
+          stringOfHtmlModules += `</div>`;
+          break;
+        case "accordion_item":
+          stringOfHtmlModules += `<div class="module module--accordion_item ${item['css_class']}">
+                                    <div class="accordian__accordianItem">
+                                      <h3 class="accordianItem__button">
+                                        ${item['question']}
+                                        <div class="accordianItem__icon">+</div>
+                                      </h3>
+                                      <div class="faqPanel">
+                                        <p>
+                                          ${item['answer']}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>`;
+          break;
         default:
           stringOfHtmlModules += `<div class="module module--error">ERROR: ${item["component"]} does not exist</div>`;
       }
@@ -132,13 +192,23 @@
     
     return stringOfHtmlModules;
 
+  }
 
-   
+  function activateAccordion() {
+    var accordianItem = document.getElementsByClassName("accordianItem__button");
+    var i;
 
-
-
-
-
+    for (i = 0; i < accordianItem.length; i++) {
+      accordianItem[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+    }
   }
 
 </script>
