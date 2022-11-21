@@ -9,23 +9,27 @@
       switch(item.component) {
         case "h1":
           var h2StyleClass = item['apply_h2_styles'] ? "jb-styledAsH2" : '';
+          var h1NarrowContentClass = item['applyNarrowContent'] ? "jb-narrowContent" : "";
 
-          stringOfHtmlModules += `<div class="module module--h1Module ${h2StyleClass} ${item['css_class']}">
+          stringOfHtmlModules += `<div class="module module--h1Module ${h2StyleClass} ${item['css_class']} ${h1NarrowContentClass}">
                                     <h1 style="text-align: ${item.alignment}" class="h1Module">${item["heading_text"]}</h1>
                                   </div>`;
           break;
         case "h2":
-          stringOfHtmlModules += `<div class="module module--h2Module ${item['css_class']}">
+          var h2NarrowContentClass = item['applyNarrowContent'] ? "jb-narrowContent" : "";
+          stringOfHtmlModules += `<div class="module module--h2Module ${item['css_class']} ${h2NarrowContentClass}">
                                     <h2 style="text-align: ${item.alignment}" class="h2Module">${item["heading_text"]}</h2>
                                   </div>`;
           break;
         case "h3":
-          stringOfHtmlModules += `<div class="module module--h3Module ${item['css_class']}">
+          var h3NarrowContentClass = item['applyNarrowContent'] ? "jb-narrowContent" : "";
+          stringOfHtmlModules += `<div class="module module--h3Module ${item['css_class']} ${h3NarrowContentClass}">
                                     <h3 style="text-align: ${item.alignment}" class="h2Module">${item["heading_text"]}</h3>
                                   </div>`;
           break;
         case "paragraph":
-          stringOfHtmlModules += `<div class="module module--p1Module ${item['css_class']}">
+          var pNarrowContentClass = item['applyNarrowContent'] ? "jb-narrowContent" : "";
+          stringOfHtmlModules += `<div class="module module--p1Module ${item['css_class']} ${pNarrowContentClass}">
                                     <p style="text-align: ${item.alignment}" ${item.alignment}" class="p1Module">${item["paragraph_text"]}</p>
                                   </div>`;
           break;
@@ -41,6 +45,17 @@
                                     <img alt="${productAltText}" class="" src=${item['product_image'][0].filename} />
                                     <p>${item['product_title']}</p>
                                     <a href="${item['button_link']}">${item['button_text']}</a>
+                                  </div>`;
+          break;
+        case "thumbail_beside_text":
+          var thumbnailAltText = item['thumbnail_image'][0].alt ? item['thumbnail_image'][0].alt : "Charles and Colvard jewelry";
+          stringOfHtmlModules += `<div class="module module--thumbnailBesideText ${item['css_class']}">
+                                    <img alt="${thumbnailAltText}" class="" src=${item['thumbnail_image'][0].filename} />
+                                    <div class="thumbnailBesideText__contentWrap">
+                                      <h3>${item['h3']}</h3>
+                                      <p>${item['text']}</p>
+                                    </div>
+
                                   </div>`;
           break;
         case "image":
