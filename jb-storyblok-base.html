@@ -14,10 +14,10 @@
         <div id="moduleContent">
             <div class="jb-loaderWrapper">
                 <div class="jb-loader"></div>
-              </div>              
+            </div>              
         </div>
     </div>
-<!-- END Marketing Variables -->
+<!-- END HTML -->
 
 
 <!-- BEGIN Bottom Script -->
@@ -32,17 +32,22 @@
         urlSlug = urlSlug.split('?')[0]; 
     }
 
-    var accessToken = "IPmLSksCNeADMqytbVRD5Qtt";
-    var contentUrl = `https://api-us.storyblok.com/v2/cdn/stories/${urlSlug}?token=${accessToken}`;
+    // Use a preview token for staging and a publish token for production
+    var accessToken = window.location.href.includes('staging') ? "AWHyFc6leFy8qRttoAoxBgtt" : "IPmLSksCNeADMqytbVRD5Qtt";  
+
+    // Include ?version=draft query param to staging
+    var contentUrl = window.location.href.includes('staging') 
+        ? `https://api-us.storyblok.com/v2/cdn/stories/${urlSlug}?token=${accessToken}&version=draft`
+        : `https://api-us.storyblok.com/v2/cdn/stories/${urlSlug}?token=${accessToken}`  ;
 
     var fullContentData = fetch(contentUrl)
         .then(response => response.json())
         .then(function(data) {
-        var relevantData = data.story.content.body;
-        var stringOfHtmlModules = createStringOfHtmlModules(relevantData);
-        document.getElementById("moduleContent").innerHTML = stringOfHtmlModules;
-        activateAccordion();
+            var relevantData = data.story.content.body;
+            var stringOfHtmlModules = createStringOfHtmlModules(relevantData);
+            document.getElementById("moduleContent").innerHTML = stringOfHtmlModules;
+            activateAccordion();
         } );
 
 </script>
-<!-- END Bottom Script -->
+<!-- END Bottom Script --> 

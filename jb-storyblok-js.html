@@ -42,7 +42,7 @@
         case "product_card":
           var productAltText = item['product_image'][0].alt ? item['product_image'][0].alt : "Charles and Colvard jewelry";
           stringOfHtmlModules += `<div class="module module--productCard ${item['css_class']}">
-                                    <img alt="${productAltText}" class="" src=${item['product_image'][0].filename} />
+                                    <img alt="${productAltText}" class="" src="${item['product_image'][0].filename}/m/ " />
                                     <p>${item['product_title']}</p>
                                     <a href="${item['button_link']}">${item['button_text']}</a>
                                   </div>`;
@@ -50,7 +50,7 @@
         case "thumbail_beside_text":
           var thumbnailAltText = item['thumbnail_image'][0].alt ? item['thumbnail_image'][0].alt : "Charles and Colvard jewelry";
           stringOfHtmlModules += `<div class="module module--thumbnailBesideText ${item['css_class']}">
-                                    <img alt="${thumbnailAltText}" class="" src=${item['thumbnail_image'][0].filename} />
+                                    <img alt="${thumbnailAltText}" class="" src="${item['thumbnail_image'][0].filename}/m/ " />
                                     <div class="thumbnailBesideText__contentWrap">
                                       <h3>${item['h3']}</h3>
                                       <p>${item['text']}</p>
@@ -64,7 +64,7 @@
           var pointerEventsStyle  = item['link_url'] ? 'pointer-events: auto' : 'pointer-events: none';
           stringOfHtmlModules +=  `<div class="module module--imageModule ${item['css_class']}">
                                       <a style="${pointerEventsStyle}" href="${imageLinkUrl}">
-                                        <img alt="${imageModuleAltText}" class="module module--imageModule" src=${item.image[0].filename} />
+                                        <img alt="${imageModuleAltText}" class="module module--imageModule" src="${item.image[0].filename}/m/ " />
                                       </a>
                                     </div>`;
           break;
